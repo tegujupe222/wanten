@@ -95,24 +95,24 @@ fun NavGraph(
         
         composable(Screen.About.route) {
             InfoScreen(
-                title = "アプリについて",
+                title = "About",
                 content = """
-                    wantEN - AIチャットアプリ
+                    wantEN - AI Chat App
                     
-                    バージョン: 1.0.0
-                    AIモデル: Gemini 2.5 Flash Lite
+                    Version: 1.0.0
+                    AI Model: Gemini 2.5 Flash Lite
                     
-                    このアプリは、Google Gemini AIを使用した
-                    パーソナライズされたチャット体験を提供します。
+                    This app provides a personalized chat experience
+                    using Google Gemini AI.
                     
-                    特徴:
-                    • カスタマイズ可能なAIペルソナ
-                    • 自然な会話体験
-                    • ローカルデータ保存
-                    • プライバシー重視
+                    Features:
+                    • Customizable AI personas
+                    • Natural conversation experience
+                    • Local data storage
+                    • Privacy-focused design
                     
-                    開発者: wantEN Team
-                    ライセンス: MIT License
+                    Developer: wantEN Team
+                    License: MIT License
                 """.trimIndent(),
                 onNavigateBack = {
                     navController.popBackStack()
@@ -122,35 +122,33 @@ fun NavGraph(
         
         composable(Screen.Privacy.route) {
             InfoScreen(
-                title = "プライバシーポリシー",
+                title = "Privacy Policy",
                 content = """
-                    プライバシーポリシー
+                    Privacy Policy
                     
-                    最終更新日: 2024年8月21日
+                    Last Updated: August 21, 2024
                     
-                    1. 情報収集
-                    このアプリは、以下の情報を収集します：
-                    • チャット履歴（ローカル保存のみ）
-                    • ペルソナ設定（ローカル保存のみ）
+                    1. Information Collection
+                    This app collects the following information:
+                    • Chat history (local storage only)
+                    • Persona settings (local storage only)
                     
-                    2. 情報の使用
-                    収集した情報は以下の目的でのみ使用されます：
-                    • チャット機能の提供
-                    • ペルソナのカスタマイズ
-                    • アプリの改善
+                    2. Use of Information
+                    Collected information is used only for:
+                    • Providing chat functionality
+                    • Persona customization
+                    • App improvements
                     
-                    3. 情報の共有
-                    あなたの個人情報を第三者と共有することはありません。
-                    チャット内容はGoogle Gemini APIに送信されますが、
-                    保存されることはありません。
+                    3. Information Sharing
+                    We do not share your personal information with third parties.
+                    Chat content is sent to Google Gemini API but is not stored.
                     
-                    4. データの保存
-                    すべてのデータはデバイス内にローカル保存されます。
-                    クラウドへの自動アップロードは行われません。
+                    4. Data Storage
+                    All data is stored locally on your device.
+                    No automatic upload to cloud services occurs.
                     
-                    5. お問い合わせ
-                    プライバシーに関するご質問は、
-                    開発者までお問い合わせください。
+                    5. Contact
+                    For privacy-related questions, please contact the developer.
                 """.trimIndent(),
                 onNavigateBack = {
                     navController.popBackStack()
@@ -160,36 +158,35 @@ fun NavGraph(
         
         composable(Screen.Terms.route) {
             InfoScreen(
-                title = "利用規約",
+                title = "Terms of Service",
                 content = """
-                    利用規約
+                    Terms of Service
                     
-                    最終更新日: 2024年8月21日
+                    Last Updated: August 21, 2024
                     
-                    1. 利用条件
-                    このアプリの利用により、以下の条件に同意したものとみなされます。
+                    1. Terms of Use
+                    By using this app, you agree to the following terms.
                     
-                    2. 利用制限
-                    以下の行為は禁止されています：
-                    • 違法な内容の投稿
-                    • 他者への誹謗中傷
-                    • アプリの改変・逆コンパイル
-                    • 商用利用（許可された場合を除く）
+                    2. Usage Restrictions
+                    The following activities are prohibited:
+                    • Posting illegal content
+                    • Defaming others
+                    • Modifying or reverse engineering the app
+                    • Commercial use (unless permitted)
                     
-                    3. 免責事項
-                    開発者は、アプリの利用により生じた
-                    いかなる損害についても責任を負いません。
+                    3. Disclaimer
+                    The developer is not responsible for any damages
+                    arising from the use of this app.
                     
-                    4. サービスの変更・終了
-                    開発者は、事前の通知なく
-                    サービスの内容を変更または終了する場合があります。
+                    4. Service Changes
+                    The developer may change or terminate services
+                    without prior notice.
                     
-                    5. 準拠法
-                    本規約は日本法に準拠して解釈されます。
+                    5. Governing Law
+                    These terms are governed by Japanese law.
                     
-                    6. 規約の変更
-                    本規約は、事前の通知なく
-                    変更される場合があります。
+                    6. Changes to Terms
+                    These terms may be changed without prior notice.
                 """.trimIndent(),
                 onNavigateBack = {
                     navController.popBackStack()

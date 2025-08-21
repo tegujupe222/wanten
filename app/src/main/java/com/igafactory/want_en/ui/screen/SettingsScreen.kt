@@ -28,10 +28,10 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("設定") },
+                title = { Text("Settings") },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "戻る")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
             )
@@ -43,7 +43,7 @@ fun SettingsScreen(
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
         ) {
-            // アプリ情報セクション
+            // App Information Section
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -54,7 +54,7 @@ fun SettingsScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "アプリ情報",
+                        text = "App Information",
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
@@ -64,7 +64,7 @@ fun SettingsScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("バージョン")
+                        Text("Version")
                         Text("1.0.0", style = MaterialTheme.typography.bodyMedium)
                     }
                     
@@ -75,13 +75,13 @@ fun SettingsScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("AIモデル")
+                        Text("AI Model")
                         Text("Gemini 2.5 Flash Lite", style = MaterialTheme.typography.bodyMedium)
                     }
                 }
             }
             
-            // データ管理セクション
+            // Data Management Section
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -92,28 +92,28 @@ fun SettingsScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "データ管理",
+                        text = "Data Management",
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
                     
                     ListItem(
-                        headlineContent = { Text("すべてのデータを削除") },
-                        supportingContent = { Text("チャット履歴とペルソナを削除します") },
+                        headlineContent = { Text("Clear All Data") },
+                        supportingContent = { Text("Delete all chat history and personas") },
                         leadingContent = { Icon(Icons.Filled.Delete, contentDescription = null) },
                         modifier = Modifier.clickable { showClearDataDialog = true }
                     )
                     
                     ListItem(
-                        headlineContent = { Text("アプリをリセット") },
-                        supportingContent = { Text("アプリを初期状態に戻します") },
+                        headlineContent = { Text("Reset App") },
+                        supportingContent = { Text("Reset app to initial state") },
                         leadingContent = { Icon(Icons.Filled.Refresh, contentDescription = null) },
                         modifier = Modifier.clickable { showResetDialog = true }
                     )
                 }
             }
             
-            // サポートセクション
+            // Support Section
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -124,35 +124,35 @@ fun SettingsScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "サポート",
+                        text = "Support",
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
                     
                     ListItem(
-                        headlineContent = { Text("アプリについて") },
-                        supportingContent = { Text("アプリの詳細情報") },
+                        headlineContent = { Text("About") },
+                        supportingContent = { Text("App information and details") },
                         leadingContent = { Icon(Icons.Filled.Info, contentDescription = null) },
                         modifier = Modifier.clickable { onNavigateToAbout() }
                     )
                     
                     ListItem(
-                        headlineContent = { Text("プライバシーポリシー") },
-                        supportingContent = { Text("プライバシーに関する情報") },
+                        headlineContent = { Text("Privacy Policy") },
+                        supportingContent = { Text("Privacy information") },
                         leadingContent = { Icon(Icons.Filled.PrivacyTip, contentDescription = null) },
                         modifier = Modifier.clickable { onNavigateToPrivacy() }
                     )
                     
                     ListItem(
-                        headlineContent = { Text("利用規約") },
-                        supportingContent = { Text("利用規約の詳細") },
+                        headlineContent = { Text("Terms of Service") },
+                        supportingContent = { Text("Terms and conditions") },
                         leadingContent = { Icon(Icons.Filled.Description, contentDescription = null) },
                         modifier = Modifier.clickable { onNavigateToTerms() }
                     )
                 }
             }
             
-            // 開発者情報セクション
+            // Developer Information Section
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -163,7 +163,7 @@ fun SettingsScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "開発者情報",
+                        text = "Developer Information",
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
@@ -173,7 +173,7 @@ fun SettingsScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("開発者")
+                        Text("Developer")
                         Text("wantEN Team", style = MaterialTheme.typography.bodyMedium)
                     }
                     
@@ -184,7 +184,7 @@ fun SettingsScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("ライセンス")
+                        Text("License")
                         Text("MIT License", style = MaterialTheme.typography.bodyMedium)
                     }
                 }
@@ -194,12 +194,12 @@ fun SettingsScreen(
         }
     }
     
-    // データ削除確認ダイアログ
+    // Clear Data Confirmation Dialog
     if (showClearDataDialog) {
         AlertDialog(
             onDismissRequest = { showClearDataDialog = false },
-            title = { Text("データを削除") },
-            text = { Text("すべてのチャット履歴とペルソナを削除しますか？この操作は取り消せません。") },
+            title = { Text("Clear Data") },
+            text = { Text("Delete all chat history and personas? This action cannot be undone.") },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -207,23 +207,23 @@ fun SettingsScreen(
                         showClearDataDialog = false
                     }
                 ) {
-                    Text("削除")
+                    Text("Delete")
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showClearDataDialog = false }) {
-                    Text("キャンセル")
+                    Text("Cancel")
                 }
             }
         )
     }
     
-    // リセット確認ダイアログ
+    // Reset Confirmation Dialog
     if (showResetDialog) {
         AlertDialog(
             onDismissRequest = { showResetDialog = false },
-            title = { Text("アプリをリセット") },
-            text = { Text("アプリを初期状態に戻しますか？すべてのデータが削除されます。") },
+            title = { Text("Reset App") },
+            text = { Text("Reset app to initial state? All data will be deleted.") },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -231,12 +231,12 @@ fun SettingsScreen(
                         showResetDialog = false
                     }
                 ) {
-                    Text("リセット")
+                    Text("Reset")
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showResetDialog = false }) {
-                    Text("キャンセル")
+                    Text("Cancel")
                 }
             }
         )

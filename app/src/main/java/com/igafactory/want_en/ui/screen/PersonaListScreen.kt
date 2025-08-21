@@ -33,10 +33,10 @@ fun PersonaListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("ペルソナ") },
+                title = { Text("Personas") },
                 actions = {
                     IconButton(onClick = onNavigateToSettings) {
-                        Icon(Icons.Filled.Settings, contentDescription = "設定")
+                        Icon(Icons.Filled.Settings, contentDescription = "Settings")
                     }
                 }
             )
@@ -45,7 +45,7 @@ fun PersonaListScreen(
             FloatingActionButton(
                 onClick = { onNavigateToPersonaEdit(null) }
             ) {
-                Icon(Icons.Filled.Add, contentDescription = "ペルソナを追加")
+                Icon(Icons.Filled.Add, contentDescription = "Add Persona")
             }
         }
     ) { paddingValues ->
@@ -67,13 +67,13 @@ fun PersonaListScreen(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "ペルソナがありません",
+                        text = "No Personas Yet",
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "新しいペルソナを作成して\nチャットを始めましょう",
+                        text = "Create a new persona to\nstart chatting",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = androidx.compose.ui.text.style.TextAlign.Center
@@ -103,12 +103,12 @@ fun PersonaListScreen(
         }
     }
     
-    // 削除確認ダイアログ
+    // Delete Confirmation Dialog
     if (showDeleteDialog && personaToDelete != null) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text("ペルソナを削除") },
-            text = { Text("「${personaToDelete!!.displayName}」を削除しますか？この操作は取り消せません。") },
+            title = { Text("Delete Persona") },
+            text = { Text("Delete \"${personaToDelete!!.displayName}\"? This action cannot be undone.") },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -117,7 +117,7 @@ fun PersonaListScreen(
                         personaToDelete = null
                     }
                 ) {
-                    Text("削除")
+                    Text("Delete")
                 }
             },
             dismissButton = {
@@ -125,7 +125,7 @@ fun PersonaListScreen(
                     showDeleteDialog = false
                     personaToDelete = null
                 }) {
-                    Text("キャンセル")
+                    Text("Cancel")
                 }
             }
         )
@@ -152,7 +152,7 @@ fun PersonaCard(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // アバター
+            // Avatar
             Box(
                 modifier = Modifier
                     .size(48.dp)
@@ -171,7 +171,7 @@ fun PersonaCard(
             
             Spacer(modifier = Modifier.width(16.dp))
             
-            // ペルソナ情報
+            // Persona Information
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -205,7 +205,7 @@ fun PersonaCard(
                 }
             }
             
-            // アクションボタン
+            // Action Buttons
             Column {
                 IconButton(
                     onClick = onEditClick,
@@ -213,7 +213,7 @@ fun PersonaCard(
                 ) {
                     Icon(
                         Icons.Filled.Edit,
-                        contentDescription = "編集",
+                        contentDescription = "Edit",
                         modifier = Modifier.size(16.dp)
                     )
                 }
@@ -224,7 +224,7 @@ fun PersonaCard(
                 ) {
                     Icon(
                         Icons.Filled.Delete,
-                        contentDescription = "削除",
+                        contentDescription = "Delete",
                         modifier = Modifier.size(16.dp),
                         tint = MaterialTheme.colorScheme.error
                     )

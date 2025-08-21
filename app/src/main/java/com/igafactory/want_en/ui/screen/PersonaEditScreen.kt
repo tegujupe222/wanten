@@ -43,10 +43,10 @@ fun PersonaEditScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (persona == null) "新しいペルソナ" else "ペルソナを編集") },
+                title = { Text(if (persona == null) "New Persona" else "Edit Persona") },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "戻る")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },
                 actions = {
@@ -75,7 +75,7 @@ fun PersonaEditScreen(
                         },
                         enabled = name.isNotBlank() && relationship.isNotBlank()
                     ) {
-                        Icon(Icons.Filled.Save, contentDescription = "保存")
+                        Icon(Icons.Filled.Save, contentDescription = "Save")
                     }
                 }
             )
@@ -88,7 +88,7 @@ fun PersonaEditScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp)
         ) {
-            // 基本情報セクション
+            // Basic Information Section
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -97,7 +97,7 @@ fun PersonaEditScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "基本情報",
+                        text = "Basic Information",
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
@@ -105,7 +105,7 @@ fun PersonaEditScreen(
                     OutlinedTextField(
                         value = name,
                         onValueChange = { name = it },
-                        label = { Text("名前") },
+                        label = { Text("Name") },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true
                     )
@@ -115,7 +115,7 @@ fun PersonaEditScreen(
                     OutlinedTextField(
                         value = relationship,
                         onValueChange = { relationship = it },
-                        label = { Text("関係性") },
+                        label = { Text("Relationship") },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true
                     )
@@ -124,7 +124,7 @@ fun PersonaEditScreen(
             
             Spacer(modifier = Modifier.height(16.dp))
             
-            // 性格・話し方セクション
+            // Personality & Speech Style Section
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -133,7 +133,7 @@ fun PersonaEditScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "性格・話し方",
+                        text = "Personality & Speech Style",
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
@@ -141,9 +141,9 @@ fun PersonaEditScreen(
                     OutlinedTextField(
                         value = personality,
                         onValueChange = { personality = it },
-                        label = { Text("性格（カンマ区切り）") },
+                        label = { Text("Personality (comma separated)") },
                         modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text("例: 親切, 明るい, 頼りになる") }
+                        placeholder = { Text("e.g., Kind, Cheerful, Reliable") }
                     )
                     
                     Spacer(modifier = Modifier.height(16.dp))
@@ -151,9 +151,9 @@ fun PersonaEditScreen(
                     OutlinedTextField(
                         value = speechStyle,
                         onValueChange = { speechStyle = it },
-                        label = { Text("話し方") },
+                        label = { Text("Speech Style") },
                         modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text("例: 丁寧で親しみやすい口調" }
+                        placeholder = { Text("e.g., Polite and friendly tone" }
                     )
                     
                     Spacer(modifier = Modifier.height(16.dp))
@@ -161,16 +161,16 @@ fun PersonaEditScreen(
                     OutlinedTextField(
                         value = catchphrases,
                         onValueChange = { catchphrases = it },
-                        label = { Text("口癖（カンマ区切り）") },
+                        label = { Text("Catchphrases (comma separated)") },
                         modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text("例: なるほど, そうですね, 確かに" }
+                        placeholder = { Text("e.g., I see, That's right, Indeed" }
                     )
                 }
             }
             
             Spacer(modifier = Modifier.height(16.dp))
             
-            // 興味・話題セクション
+            // Interests & Topics Section
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -179,7 +179,7 @@ fun PersonaEditScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "興味・話題",
+                        text = "Interests & Topics",
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
@@ -187,15 +187,15 @@ fun PersonaEditScreen(
                     OutlinedTextField(
                         value = favoriteTopics,
                         onValueChange = { favoriteTopics = it },
-                        label = { Text("好きな話題（カンマ区切り）") },
+                        label = { Text("Favorite Topics (comma separated)") },
                         modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text("例: 音楽, 映画, 料理, 旅行" }
+                        placeholder = { Text("e.g., Music, Movies, Cooking, Travel" }
                     )
                     
                     Spacer(modifier = Modifier.height(16.dp))
                     
                     Text(
-                        text = "現在の気分",
+                        text = "Current Mood",
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
@@ -216,7 +216,7 @@ fun PersonaEditScreen(
             
             Spacer(modifier = Modifier.height(16.dp))
             
-            // カスタマイズセクション
+            // Customization Section
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -225,7 +225,7 @@ fun PersonaEditScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "カスタマイズ",
+                        text = "Customization",
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
@@ -235,7 +235,7 @@ fun PersonaEditScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("背景色")
+                        Text("Background Color")
                         Row(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -252,7 +252,7 @@ fun PersonaEditScreen(
                                     showColorPicker = true
                                 }
                             ) {
-                                Text("変更")
+                                Text("Change")
                             }
                         }
                     }
@@ -264,7 +264,7 @@ fun PersonaEditScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("文字色")
+                        Text("Text Color")
                         Row(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -281,7 +281,7 @@ fun PersonaEditScreen(
                                     showColorPicker = true
                                 }
                             ) {
-                                Text("変更")
+                                Text("Change")
                             }
                         }
                     }
@@ -291,7 +291,7 @@ fun PersonaEditScreen(
                     OutlinedTextField(
                         value = fontSize,
                         onValueChange = { fontSize = it },
-                        label = { Text("フォントサイズ") },
+                        label = { Text("Font Size") },
                         modifier = Modifier.fillMaxWidth(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         singleLine = true
@@ -301,11 +301,11 @@ fun PersonaEditScreen(
         }
     }
     
-    // カラーピッカー（簡易版）
+    // Color Picker (Simple version)
     if (showColorPicker) {
         AlertDialog(
             onDismissRequest = { showColorPicker = false },
-            title = { Text("色を選択") },
+            title = { Text("Choose Color") },
             text = {
                 Column {
                     val colors = listOf("#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF", "#000000", "#FFFFFF")
@@ -336,7 +336,7 @@ fun PersonaEditScreen(
             },
             confirmButton = {
                 TextButton(onClick = { showColorPicker = false }) {
-                    Text("キャンセル")
+                    Text("Cancel")
                 }
             }
         )
