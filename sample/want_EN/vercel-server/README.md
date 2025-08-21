@@ -1,190 +1,104 @@
-# want_EN Vercel Server
+# Want EN - Vercel Server (Gemini)
 
-This is the Vercel server component for the want_EN AI chat app. It provides a proxy API endpoint for OpenAI integration.
+This is the Vercel serverless backend for the Want EN Android app, providing a secure proxy for Google Gemini API calls.
 
-## 🚀 Quick Setup
+## Features
+
+- ✅ Secure API key management via environment variables
+- ✅ CORS enabled for cross-origin requests
+- ✅ Persona-based conversation context
+- ✅ Conversation history support
+- ✅ Error handling for API limits and safety filters
+- ✅ Uses Gemini 2.0 Flash Exp model
+
+## Setup
 
 ### 1. Deploy to Vercel
 
-1. **Install Vercel CLI** (if not already installed):
-   ```bash
-   npm install -g vercel
-   ```
-
-2. **Login to Vercel**:
-   ```bash
-   vercel login
-   ```
-
-3. **Deploy the server**:
-   ```bash
-   cd vercel-server
-   vercel --prod
-   ```
-
-4. **Set up environment variables**:
-   - Go to your Vercel dashboard
-   - Navigate to your project settings
-   - Add the following environment variable:
-     - `OPENAI_API_KEY`: Your OpenAI API key
-
-### 2. Update Swift App Configuration
-
-After deployment, update the `AIConfigManager.swift` in your Swift app:
-
-```swift
-// Replace the default URL with your actual Vercel deployment URL
-cloudFunctionURL: "https://your-vercel-app.vercel.app/api/openai-proxy"
+```bash
+cd sample/want_EN/vercel-server
+vercel --prod
 ```
 
-## 📁 Project Structure
+### 2. Set Environment Variables
 
-```
-vercel-server/
-├── api/
-│   └── openai-proxy.js    # Main API endpoint
-├── package.json           # Dependencies
-└── README.md             # This file
-```
+1. Go to your Vercel dashboard
+2. Navigate to your project
+3. Go to Settings > Environment Variables
+4. Add `GEMINI_API_KEY` with your Google Gemini API key
 
-## 🔧 API Endpoint
+### 3. Get Your API Endpoint
 
-### POST `/api/openai-proxy`
+After deployment, you'll get a URL like: `https://your-project.vercel.app`
+Your Gemini proxy endpoint will be: `https://your-project.vercel.app/api/gemini-proxy`
+
+## API Endpoint
+
+### POST /api/gemini-proxy
 
 **Request Body:**
 ```json
 {
   "persona": {
+    "id": "persona-id",
     "name": "Assistant Name",
     "relationship": "Friend",
     "personality": ["Friendly", "Helpful"],
-    "speechStyle": "Casual",
+    "speechStyle": "Casual and warm",
     "catchphrases": ["Hello!", "How can I help?"],
     "favoriteTopics": ["Technology", "Science"]
   },
   "conversationHistory": [
     {
+      "id": "message-id",
       "content": "Hello!",
       "isFromUser": true,
       "timestamp": "2024-01-01T00:00:00Z"
     }
   ],
   "userMessage": "How are you today?",
-  "emotionContext": "Happy"
+  "emotionContext": "Happy and excited"
 }
 ```
 
 **Response:**
 ```json
 {
-  "response": "I'm doing great! Thanks for asking. How about you?",
-  "error": null
+  "response": "Hello! I'm doing great today, thanks for asking! How about you?",
+  "error": null,
+  "model": "gemini-2.0-flash-exp"
 }
 ```
 
-## 🛠️ Development
-
-### Local Development
-
-1. **Install dependencies**:
-   ```bash
-   cd vercel-server
-   npm install
-   ```
-
-2. **Set up environment variables**:
-   Create a `.env.local` file:
-   ```
-   OPENAI_API_KEY=your_openai_api_key_here
-   ```
-
-3. **Run locally**:
-   ```bash
-   vercel dev
-   ```
-
-### Testing the API
-
-You can test the API using curl:
+## Local Development
 
 ```bash
-curl -X POST https://your-vercel-app.vercel.app/api/openai-proxy \
-  -H "Content-Type: application/json" \
-  -d '{
-    "persona": {
-      "name": "Test",
-      "relationship": "Assistant",
-      "personality": ["Friendly"],
-      "speechStyle": "Polite",
-      "catchphrases": ["Hello"],
-      "favoriteTopics": ["Test"]
-    },
-    "conversationHistory": [],
-    "userMessage": "Hello, how are you?",
-    "emotionContext": null
-  }'
+npm install
+vercel dev
 ```
 
-## 🔍 Troubleshooting
+## Environment Variables
 
-### Common Issues
+- `GEMINI_API_KEY`: Your Google Gemini API key
 
-1. **405 Method Not Allowed**
-   - Ensure you're using POST method
-   - Check that the URL is correct
+## Deployment
 
-2. **500 Server Error**
-   - Verify `OPENAI_API_KEY` is set in Vercel dashboard
-   - Check Vercel function logs for detailed error messages
+```bash
+vercel --prod
+```
 
-3. **CORS Issues**
-   - The API is configured to allow all origins (`*`)
-   - If you need specific origins, modify the CORS headers in `openai-proxy.js`
+## Update Android App
 
-4. **OpenAI API Errors**
-   - Check your OpenAI API key is valid
-   - Verify you have sufficient credits
-   - Check OpenAI API status
+After deploying to Vercel, update the Android app's `NetworkModule.kt`:
 
-### Debugging
+```kotlin
+.baseUrl("https://your-project.vercel.app/") // Replace with your Vercel URL
+```
 
-1. **Check Vercel Function Logs**:
-   - Go to your Vercel dashboard
-   - Navigate to Functions tab
-   - Click on the function to view logs
+## Security Considerations
 
-2. **Test API Key**:
-   ```bash
-   curl -H "Authorization: Bearer YOUR_API_KEY" \
-        https://api.openai.com/v1/models
-   ```
-
-## 📝 Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `OPENAI_API_KEY` | Your OpenAI API key | Yes |
-
-## 🔒 Security
-
-- The API key is stored securely in Vercel environment variables
-- CORS is configured to allow cross-origin requests
-- Input validation is performed on all requests
-- Error messages are sanitized to prevent information leakage
-
-## 📞 Support
-
-If you encounter issues:
-
-1. Check the Vercel function logs
-2. Verify your OpenAI API key is valid
-3. Test the API endpoint directly
-4. Check the Swift app logs for detailed error messages
-
-## 🚀 Deployment Checklist
-
-- [ ] Deploy to Vercel
-- [ ] Set `OPENAI_API_KEY` environment variable
-- [ ] Test API endpoint
-- [ ] Update Swift app configuration
-- [ ] Test full integration 
+- API keys stored securely in Vercel environment variables
+- CORS configured for Android app domain
+- Input validation and sanitization
+- Rate limiting protection
+- Error handling without exposing sensitive information 

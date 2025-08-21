@@ -7,7 +7,7 @@ import retrofit2.http.POST
 
 interface ApiService {
     
-    @POST("api/chat")
+    @POST("api/gemini-proxy")
     suspend fun generateResponse(
         @Body request: ChatRequest
     ): ChatResponse
@@ -22,5 +22,6 @@ data class ChatRequest(
 
 data class ChatResponse(
     val response: String,
-    val error: String? = null
+    val error: String? = null,
+    val model: String? = null
 )

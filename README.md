@@ -1,10 +1,10 @@
 # Want EN - Android Version
 
-A conversational AI app that creates personalized chat experiences with AI personas. This is the Android version of the original "want" app, featuring OpenAI integration for natural conversations.
+A conversational AI app that creates personalized chat experiences with AI personas. This is the Android version of the original "want" app, featuring Google Gemini integration for natural conversations.
 
 ## Features
 
-- 🤖 **AI-Powered Conversations**: Chat with AI personas using OpenAI GPT-3.5-turbo
+- 🤖 **AI-Powered Conversations**: Chat with AI personas using Google Gemini 2.0 Flash Exp
 - 👤 **Customizable Personas**: Create and customize AI personalities
 - 💬 **Natural Conversations**: More natural and engaging chat experiences
 - 🎭 **Emotion Awareness**: AI responds to emotional context
@@ -18,7 +18,7 @@ A conversational AI app that creates personalized chat experiences with AI perso
 - **Framework**: Jetpack Compose
 - **Language**: Kotlin
 - **Target**: Android API 24+
-- **AI Provider**: OpenAI GPT-3.5-turbo
+- **AI Provider**: Google Gemini 2.0 Flash Exp
 - **Database**: Room
 - **Dependency Injection**: Hilt
 - **Networking**: Retrofit + OkHttp
@@ -26,7 +26,7 @@ A conversational AI app that creates personalized chat experiences with AI perso
 ### Backend Server
 - **Platform**: Vercel
 - **Runtime**: Node.js
-- **API**: OpenAI API
+- **API**: Google Gemini API
 - **CORS**: Enabled for Android app
 
 ## Setup Instructions
@@ -35,7 +35,7 @@ A conversational AI app that creates personalized chat experiences with AI perso
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/tegujupe222/wanten.git
 cd wanten
 ```
 
@@ -55,23 +55,17 @@ cd wanten
 cd sample/want_EN/vercel-server
 ```
 
-2. Install dependencies:
+2. Deploy to Vercel:
 ```bash
-npm install
+./deploy.sh
 ```
 
 3. Set up environment variables:
-   - Create a `.env.local` file
-   - Add your OpenAI API key: `OPENAI_API_KEY=your_key_here`
+   - Go to your Vercel dashboard
+   - Navigate to your project settings
+   - Add `GEMINI_API_KEY` with your Google Gemini API key
 
-4. Deploy to Vercel:
-```bash
-npm i -g vercel
-vercel login
-vercel
-```
-
-5. Update the Android app with your Vercel URL:
+4. Update the Android app with your Vercel URL:
    - Open `NetworkModule.kt`
    - Update `baseUrl` with your Vercel deployment URL
 
@@ -108,11 +102,19 @@ app/src/main/java/com/igafactory/want_en/
 │       └── PersonaViewModel.kt
 ├── MainActivity.kt
 └── WantEnApplication.kt
+
+sample/want_EN/vercel-server/
+├── api/
+│   └── gemini-proxy.js         # Gemini API endpoint
+├── package.json                # Dependencies
+├── vercel.json                # Vercel configuration
+├── deploy.sh                  # Deployment script
+└── README.md                  # Server documentation
 ```
 
 ## API Endpoints
 
-### POST /api/chat
+### POST /api/gemini-proxy
 
 Handles AI conversation requests from the Android app.
 
@@ -145,7 +147,8 @@ Handles AI conversation requests from the Android app.
 ```json
 {
   "response": "Hello! I'm doing great today, thanks for asking! How about you?",
-  "error": null
+  "error": null,
+  "model": "gemini-2.0-flash-exp"
 }
 ```
 
@@ -154,7 +157,7 @@ Handles AI conversation requests from the Android app.
 ### Environment Variables
 
 Required for the Vercel server:
-- `OPENAI_API_KEY`: Your OpenAI API key
+- `GEMINI_API_KEY`: Your Google Gemini API key
 
 ### Android Permissions
 
@@ -174,7 +177,8 @@ The app requires the following permissions:
 
 ```bash
 cd sample/want_EN/vercel-server
-npm run dev
+npm install
+vercel dev
 ```
 
 ## Deployment
@@ -220,7 +224,7 @@ For support and questions:
 
 ### Version 1.0.0 (Android Release)
 - ✅ Complete Android implementation
-- ✅ OpenAI integration
+- ✅ Google Gemini 2.0 Flash Exp integration
 - ✅ Vercel server deployment
 - ✅ Enhanced conversation naturalness
 - ✅ Improved error handling
