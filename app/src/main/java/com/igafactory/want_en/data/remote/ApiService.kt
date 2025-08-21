@@ -7,15 +7,15 @@ import retrofit2.http.POST
 
 interface ApiService {
     
-    @POST("api/gemini-proxy")
+    @POST("api/simple-gemini") // Changed to simple endpoint for testing
     suspend fun generateResponse(
         @Body request: ChatRequest
     ): ChatResponse
 }
 
 data class ChatRequest(
-    val persona: UserPersona,
-    val conversationHistory: List<ChatMessage>,
+    val persona: UserPersona? = null, // Made optional for simple endpoint
+    val conversationHistory: List<ChatMessage>? = null, // Made optional for simple endpoint
     val userMessage: String,
     val emotionContext: String? = null
 )
