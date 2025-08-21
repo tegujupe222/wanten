@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/gemini-proxy.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/gemini-proxy",
+      "dest": "/api/gemini-proxy.js"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "want-en-vercel",
+  "version": "1.0.0",
+  "description": "Vercel serverless functions for want EN app",
+  "main": "api/gemini-proxy.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0"
+  },
+  "devDependencies": {
+    "vercel": "^33.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
