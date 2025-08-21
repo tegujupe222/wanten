@@ -1,28 +1,30 @@
 {
   "name": "wanten-vercel-server",
   "version": "1.0.0",
-  "description": "Vercel serverless backend for Want EN Android app with Gemini API",
-  "main": "index.js",
+  "description": "Vercel serverless functions for wantEN Android app with Gemini API integration",
+  "main": "local-server.js",
   "scripts": {
-    "dev": "vercel dev",
+    "start": "node local-server.js",
+    "dev": "nodemon local-server.js",
     "build": "echo 'No build step required'",
-    "start": "vercel dev"
+    "vercel-build": "echo 'No build step required'"
   },
   "keywords": [
     "vercel",
     "serverless",
     "gemini",
+    "ai",
     "android",
-    "chat",
-    "ai"
+    "api"
   ],
-  "author": "Want EN Team",
+  "author": "wantEN Team",
   "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {
-    "vercel": "^32.0.0"
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "node-fetch": "^2.7.0"
   },
-  "engines": {
-    "node": ">=18.0.0"
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 } 

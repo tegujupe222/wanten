@@ -30,7 +30,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://wanten-lime.vercel.app/") // Updated Vercel URL
+            .baseUrl("http://10.0.2.2:3000/") // Local server for Android emulator
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
