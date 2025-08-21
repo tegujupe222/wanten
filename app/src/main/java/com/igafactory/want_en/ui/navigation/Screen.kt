@@ -6,20 +6,13 @@ import androidx.navigation.navArgument
 sealed class Screen(val route: String) {
     object PersonaList : Screen("persona_list")
     object Chat : Screen("chat/{personaId}") {
-        val arguments = listOf(
-            navArgument("personaId") {
-                type = NavType.StringType
-                nullable = true
-                defaultValue = null
-            }
-        )
-        
-        fun createRoute(personaId: String? = null): String {
-            return if (personaId != null) {
-                "chat/$personaId"
-            } else {
-                "chat/null"
-            }
-        }
+        fun createRoute(personaId: String) = "chat/$personaId"
     }
+    object PersonaEdit : Screen("persona_edit/{personaId}") {
+        fun createRoute(personaId: String? = null) = "persona_edit/${personaId ?: "new"}"
+    }
+    object Settings : Screen("settings")
+    object About : Screen("about")
+    object Privacy : Screen("privacy")
+    object Terms : Screen("terms")
 }
