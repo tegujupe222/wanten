@@ -4,7 +4,7 @@ A conversational AI app that creates personalized chat experiences with AI perso
 
 ## Features
 
-- 🤖 **AI-Powered Conversations**: Chat with AI personas using Google Gemini 2.0 Flash Exp
+- 🤖 **AI-Powered Conversations**: Chat with AI personas using Google Gemini 2.5 Flash Lite
 - 👤 **Customizable Personas**: Create and customize AI personalities
 - 💬 **Natural Conversations**: More natural and engaging chat experiences
 - 🎭 **Emotion Awareness**: AI responds to emotional context
@@ -18,7 +18,7 @@ A conversational AI app that creates personalized chat experiences with AI perso
 - **Framework**: Jetpack Compose
 - **Language**: Kotlin
 - **Target**: Android API 24+
-- **AI Provider**: Google Gemini 2.0 Flash Exp
+- **AI Provider**: Google Gemini 2.5 Flash Lite
 - **Database**: Room
 - **Dependency Injection**: Hilt
 - **Networking**: Retrofit + OkHttp
@@ -148,7 +148,7 @@ Handles AI conversation requests from the Android app.
 {
   "response": "Hello! I'm doing great today, thanks for asking! How about you?",
   "error": null,
-  "model": "gemini-2.0-flash-exp"
+  "model": "gemini-2.5-flash-lite"
 }
 ```
 
@@ -224,7 +224,7 @@ For support and questions:
 
 ### Version 1.0.0 (Android Release)
 - ✅ Complete Android implementation
-- ✅ Google Gemini 2.0 Flash Exp integration
+- ✅ Google Gemini 2.5 Flash Lite integration
 - ✅ Vercel server deployment
 - ✅ Enhanced conversation naturalness
 - ✅ Improved error handling

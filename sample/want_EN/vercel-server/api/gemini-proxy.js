@@ -73,8 +73,8 @@ export default async function handler(req, res) {
     console.log('📨 Sending request to Gemini API');
     console.log('💬 Messages count:', messages.length);
     
-    // Call Gemini API
-    const geminiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${geminiApiKey}`, {
+    // Call Gemini API with Gemini 2.5 Flash Lite model
+    const geminiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${geminiApiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -124,7 +124,7 @@ export default async function handler(req, res) {
     res.status(200).json({
       response: responseText,
       error: null,
-      model: 'gemini-2.0-flash-exp'
+      model: 'gemini-2.5-flash-lite'
     });
     
   } catch (error) {

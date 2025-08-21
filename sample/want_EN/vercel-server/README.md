@@ -9,7 +9,7 @@ This is the Vercel serverless backend for the Want EN Android app, providing a s
 - ✅ Persona-based conversation context
 - ✅ Conversation history support
 - ✅ Error handling for API limits and safety filters
-- ✅ Uses Gemini 2.0 Flash Exp model
+- ✅ Uses Gemini 2.5 Flash Lite model
 
 ## Setup
 
@@ -66,7 +66,7 @@ Your Gemini proxy endpoint will be: `https://your-project.vercel.app/api/gemini-
 {
   "response": "Hello! I'm doing great today, thanks for asking! How about you?",
   "error": null,
-  "model": "gemini-2.0-flash-exp"
+  "model": "gemini-2.5-flash-lite"
 }
 ```
 
