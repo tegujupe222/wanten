@@ -5,7 +5,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -139,14 +142,14 @@ fun SettingsScreen(
                     ListItem(
                         headlineContent = { Text("Privacy Policy") },
                         supportingContent = { Text("Privacy information") },
-                        leadingContent = { Icon(Icons.Filled.PrivacyTip, contentDescription = null) },
+                        leadingContent = { Icon(Icons.Filled.Settings, contentDescription = null) },
                         modifier = Modifier.clickable { onNavigateToPrivacy() }
                     )
                     
                     ListItem(
                         headlineContent = { Text("Terms of Service") },
                         supportingContent = { Text("Terms and conditions") },
-                        leadingContent = { Icon(Icons.Filled.Description, contentDescription = null) },
+                        leadingContent = { Icon(Icons.Filled.Info, contentDescription = null) },
                         modifier = Modifier.clickable { onNavigateToTerms() }
                     )
                 }

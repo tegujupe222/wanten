@@ -2,12 +2,14 @@ package com.igafactory.want_en.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,27 +17,55 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.igafactory.want_en.data.model.PersonaMood
 import com.igafactory.want_en.data.model.UserPersona
+import com.igafactory.want_en.ui.viewmodel.PersonaViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PersonaEditScreen(
-    persona: UserPersona? = null,
-    onSave: (UserPersona) -> Unit,
-    onNavigateBack: () -> Unit
+    personaId: String? = null,
+    onNavigateBack: () -> Unit,
+    viewModel: PersonaViewModel = hiltViewModel()
 ) {
-    var name by remember { mutableStateOf(persona?.name ?: "") }
-    var relationship by remember { mutableStateOf(persona?.relationship ?: "") }
-    var personality by remember { mutableStateOf(persona?.personality?.joinToString(", ") ?: "") }
-    var speechStyle by remember { mutableStateOf(persona?.speechStyle ?: "") }
-    var catchphrases by remember { mutableStateOf(persona?.catchphrases?.joinToString(", ") ?: "") }
-    var favoriteTopics by remember { mutableStateOf(persona?.favoriteTopics?.joinToString(", ") ?: "") }
-    var selectedMood by remember { mutableStateOf(persona?.mood ?: PersonaMood.NEUTRAL) }
+    // Load existing persona if editing
+    var currentPersona by remember { mutableStateOf<UserPersona?>(null) }
     
-    var backgroundColor by remember { mutableStateOf(persona?.customization?.backgroundColor ?: "#FFFFFF") }
-    var textColor by remember { mutableStateOf(persona?.customization?.textColor ?: "#000000") }
-    var fontSize by remember { mutableStateOf(persona?.customization?.fontSize?.toString() ?: "16") }
+    LaunchedEffect(personaId) {
+        if (personaId != null) {
+            currentPersona = viewModel.getPersonaById(personaId)
+        }
+    }
+    
+    var name by remember { mutableStateOf("") }
+    var relationship by remember { mutableStateOf("") }
+    var personality by remember { mutableStateOf("") }
+    var speechStyle by remember { mutableStateOf("") }
+    var catchphrases by remember { mutableStateOf("") }
+    var favoriteTopics by remember { mutableStateOf("") }
+    var selectedMood by remember { mutableStateOf(PersonaMood.NEUTRAL) }
+    
+    var backgroundColor by remember { mutableStateOf("#FFFFFF") }
+    var textColor by remember { mutableStateOf("#000000") }
+    var fontSize by remember { mutableStateOf("16") }
+    
+    // Update fields when persona is loaded
+    LaunchedEffect(currentPersona) {
+        currentPersona?.let { persona ->
+            name = persona.name
+            relationship = persona.relationship
+            personality = persona.personality.joinToString(", ")
+            speechStyle = persona.speechStyle
+            catchphrases = persona.catchphrases.joinToString(", ")
+            favoriteTopics = persona.favoriteTopics.joinToString(", ")
+            selectedMood = persona.mood
+            backgroundColor = persona.customization.backgroundColor
+            textColor = persona.customization.textColor
+            fontSize = persona.customization.fontSize.toString()
+        }
+    }
     
     var showColorPicker by remember { mutableStateOf(false) }
     var colorPickerType by remember { mutableStateOf("") }
@@ -43,7 +73,7 @@ fun PersonaEditScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (persona == null) "New Persona" else "Edit Persona") },
+                title = { Text(if (personaId == null) "New Persona" else "Edit Persona") },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -53,7 +83,7 @@ fun PersonaEditScreen(
                     IconButton(
                         onClick = {
                             val newPersona = UserPersona(
-                                id = persona?.id ?: "",
+                                id = currentPersona?.id ?: java.util.UUID.randomUUID().toString(),
                                 name = name,
                                 relationship = relationship,
                                 personality = personality.split(",").map { it.trim() }.filter { it.isNotEmpty() },
@@ -61,21 +91,23 @@ fun PersonaEditScreen(
                                 catchphrases = catchphrases.split(",").map { it.trim() }.filter { it.isNotEmpty() },
                                 favoriteTopics = favoriteTopics.split(",").map { it.trim() }.filter { it.isNotEmpty() },
                                 mood = selectedMood,
-                                customization = persona?.customization?.copy(
-                                    backgroundColor = backgroundColor,
-                                    textColor = textColor,
-                                    fontSize = fontSize.toIntOrNull() ?: 16
-                                ) ?: persona?.customization ?: com.igafactory.want_en.data.model.PersonaCustomization(
+                                customization = com.igafactory.want_en.data.model.PersonaCustomization(
                                     backgroundColor = backgroundColor,
                                     textColor = textColor,
                                     fontSize = fontSize.toIntOrNull() ?: 16
                                 )
                             )
-                            onSave(newPersona)
+                            
+                            if (currentPersona != null) {
+                                viewModel.updatePersona(newPersona)
+                            } else {
+                                viewModel.addPersona(newPersona)
+                            }
+                            onNavigateBack()
                         },
                         enabled = name.isNotBlank() && relationship.isNotBlank()
                     ) {
-                        Icon(Icons.Filled.Save, contentDescription = "Save")
+                        Icon(Icons.Filled.Check, contentDescription = "Save")
                     }
                 }
             )
@@ -153,7 +185,7 @@ fun PersonaEditScreen(
                         onValueChange = { speechStyle = it },
                         label = { Text("Speech Style") },
                         modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text("e.g., Polite and friendly tone" }
+                        placeholder = { Text("e.g., Polite and friendly tone") }
                     )
                     
                     Spacer(modifier = Modifier.height(16.dp))
@@ -163,7 +195,7 @@ fun PersonaEditScreen(
                         onValueChange = { catchphrases = it },
                         label = { Text("Catchphrases (comma separated)") },
                         modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text("e.g., I see, That's right, Indeed" }
+                        placeholder = { Text("e.g., I see, That's right, Indeed") }
                     )
                 }
             }
@@ -189,7 +221,7 @@ fun PersonaEditScreen(
                         onValueChange = { favoriteTopics = it },
                         label = { Text("Favorite Topics (comma separated)") },
                         modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text("e.g., Music, Movies, Cooking, Travel" }
+                        placeholder = { Text("e.g., Music, Movies, Cooking, Travel") }
                     )
                     
                     Spacer(modifier = Modifier.height(16.dp))

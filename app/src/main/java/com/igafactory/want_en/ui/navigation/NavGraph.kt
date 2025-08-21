@@ -57,16 +57,8 @@ fun NavGraph(
             )
         ) { backStackEntry ->
             val personaId = backStackEntry.arguments?.getString("personaId")
-            val persona = if (personaId == "new") null else {
-                // TODO: Get persona from repository
-                null
-            }
             PersonaEditScreen(
-                persona = persona,
-                onSave = { newPersona ->
-                    // TODO: Save persona to repository
-                    navController.popBackStack()
-                },
+                personaId = if (personaId == "new") null else personaId,
                 onNavigateBack = {
                     navController.popBackStack()
                 }

@@ -82,4 +82,13 @@ class PersonaViewModel @Inject constructor(
         val defaultPersona = UserPersona.defaultPersona()
         addPersona(defaultPersona)
     }
+    
+    suspend fun getPersonaById(personaId: String): UserPersona? {
+        return try {
+            chatRepository.getPersonaById(personaId)
+        } catch (e: Exception) {
+            _error.value = "Failed to get persona: ${e.message}"
+            null
+        }
+    }
 }

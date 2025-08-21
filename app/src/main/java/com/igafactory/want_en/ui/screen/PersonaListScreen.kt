@@ -6,7 +6,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,19 +18,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.igafactory.want_en.data.model.UserPersona
+import com.igafactory.want_en.ui.viewmodel.PersonaViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PersonaListScreen(
-    personas: List<UserPersona> = emptyList(),
     onNavigateToChat: (String) -> Unit,
     onNavigateToPersonaEdit: (String?) -> Unit,
     onNavigateToSettings: () -> Unit,
-    onDeletePersona: (String) -> Unit = {}
+    viewModel: PersonaViewModel = hiltViewModel()
 ) {
+    val personas by viewModel.personas.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val error by viewModel.error.collectAsStateWithLifecycle()
+    
     var showDeleteDialog by remember { mutableStateOf(false) }
     var personaToDelete by remember { mutableStateOf<UserPersona?>(null) }
     
@@ -49,18 +59,22 @@ fun PersonaListScreen(
             }
         }
     ) { paddingValues ->
-        if (personas.isEmpty()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                contentAlignment = Alignment.Center
-            ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            if (isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            } else if (personas.isEmpty()) {
                 Column(
+                    modifier = Modifier.align(Alignment.Center),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Icon(
-                        Icons.Filled.PersonAdd,
+                        Icons.Filled.Person,
                         contentDescription = null,
                         modifier = Modifier.size(64.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
@@ -79,25 +93,40 @@ fun PersonaListScreen(
                         textAlign = androidx.compose.ui.text.style.TextAlign.Center
                     )
                 }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    items(personas) { persona ->
+                        PersonaCard(
+                            persona = persona,
+                            onClick = { onNavigateToChat(persona.id) },
+                            onEditClick = { onNavigateToPersonaEdit(persona.id) },
+                            onDeleteClick = {
+                                personaToDelete = persona
+                                showDeleteDialog = true
+                            }
+                        )
+                    }
+                }
             }
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                items(personas) { persona ->
-                    PersonaCard(
-                        persona = persona,
-                        onClick = { onNavigateToChat(persona.id) },
-                        onEditClick = { onNavigateToPersonaEdit(persona.id) },
-                        onDeleteClick = {
-                            personaToDelete = persona
-                            showDeleteDialog = true
+            
+            // Error handling
+            error?.let { errorMessage ->
+                Snackbar(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(16.dp),
+                    action = {
+                        TextButton(onClick = { viewModel.clearError() }) {
+                            Text("Dismiss")
                         }
-                    )
+                    }
+                ) {
+                    Text(errorMessage)
                 }
             }
         }
@@ -112,7 +141,7 @@ fun PersonaListScreen(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        onDeletePersona(personaToDelete!!.id)
+                        viewModel.deletePersona(personaToDelete!!)
                         showDeleteDialog = false
                         personaToDelete = null
                     }
